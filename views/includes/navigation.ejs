@@ -1,0 +1,270 @@
+		<!-- Mobile-header-top Start -->
+        <div class="mobile-header-top d-block d-md-none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- header-search-mobile start -->
+                        <div class="header-search-mobile">
+                            <div class="table">
+                                <div class="table-cell">
+                                    <ul>
+                                        <li><a class="search-open" href="#"><i class="zmdi zmdi-search"></i></a></li>
+                                        <% if (!isAuthenticated) { %>
+                                            <li><a href="/login"><i class="zmdi zmdi-key"></i></a></li>
+                                        <% } else { %>
+                                            <li>
+                                                <form action="/logout" method="post">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <button data-text="logout" type="submit"><i class="zmdi zmdi-sign-in"></i></button>
+                                                </form>
+                                            </li>
+                                        <% } %>
+                                        <li><a href="/my-account"><i class="zmdi zmdi-account"></i></a></li>
+                                        <li><a href="/wishlist"><i class="zmdi zmdi-favorite"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- header-search-mobile start -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile-header-top End -->
+        <!-- HEADER-AREA START -->
+        <header id="sticky-menu" class="header ">
+            <div class="header-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-4 col-7">
+                            <div class="logo text-md-center">
+                                <a href="/"><img src="/img/logo/logo.png " alt="" /></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-5">
+                            <div class="mini-cart text-end">
+                                <ul>
+                                    <li>
+                                        <a class="cart-icon" href="#">
+                                            <i class="zmdi zmdi-shopping-cart"></i>
+                                            <% if (cartProducts) { %>         
+                                                    <span class="products-total"><%= cartProducts.totalProducts %></span>
+                                            <% } %> 
+                                        </a>
+                                        <div class="mini-cart-brief text-left">
+                                            <% if (cartProducts) { %>
+                                            <div class="cart-items">
+                                                <p class="mb-0">You have <span class="products-total"><%= cartProducts.totalProducts %> items</span> in your shopping bag</p>
+                                            </div>
+                                            <% if (cartProducts.length > 0) { %>
+                                            <div class="all-cart-product clearfix">
+                                                <% cartProducts.forEach(cp => { %>
+                                                <div class="single-cart clearfix product">
+                                                    <div class="cart-photo">
+                                                        <a href="/products/<%= cp.productId._id %>"><img src="https://lh3.googleusercontent.com/u/0/d/<%= cp.productId.imageUrls[0] %>" alt="" /></a>
+                                                    </div>
+                                                    <div class="cart-info">
+                                                        <h5><a href="/products/<%= cp.productId._id %>"><%= cp.productId.title %></a></h5>
+                                                        <p class="mb-0 priceP">Price : $ <%= cp.productId.price %></p>
+                                                        <p class="mb-0 qtyP">Qty : <%= cp.quantity %> </p>
+                                                        <span class="cart-delete">
+                                                            <input type="hidden" value="<%= cp.productId._id %>" name="productId">
+                                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                            <a href="#"><i class="zmdi zmdi-close" onclick="deleteProductCart(this)"></i></a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+                                            </div>
+                                            <div class="cart-totals">
+                                                <h5 class="mb-0">Total:<span class="floatright price-totals">$  <%= cartProducts.totalPrice %></span></h5>
+                                            </div>
+                                            <% } else { %>
+                                                <div class="all-cart-product clearfix">
+                                                    <h5 class="text-center no-product">No Products in Cart!</h5>
+                                                </div>
+                                                <div class="cart-totals">
+                                                    <h5 class="mb-0">Total:<span class="floatright price-totals">$  <%= cartProducts.totalPrice %></span></h5>
+                                                </div>
+                                            <% } %>
+                                            <div class="cart-bottom  clearfix">
+                                                <a href="/cart" class="button-one floatleft text-uppercase" data-text="View cart">View cart</a>
+                                                <a href="/checkout" class="button-one floatright text-uppercase" data-text="Check out">Check out</a>
+                                            </div>
+                                            <% } else { %>
+                                                <p class="text-center">You need <a href="/login">login</a> !</p>
+                                            <% } %> 
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MAIN-MENU START -->
+            <div class="menu-toggle hamburger hamburger--emphatic d-none d-md-block">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+            <div class="main-menu  d-none d-md-block">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/">home</a>
+                        </li>
+                        <% if (isAuthenticated) { %>
+                            <li><a href="/my-account">Account</a>
+                                <div class="sub-menu menu-scroll">
+                                    <ul>
+                                        <li><a href="/my-account">my Account</a></li>
+                                        <li><a href="/cart">cart</a></li>
+                                        <li><a href="/wishlist">wishlist</a></li>
+                                        <li><a href="/order">orders</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        <% } %>
+                        <li><a href="/shop">shop</a>
+                            <div class="sub-menu menu-scroll">
+                                <ul>
+                                    <li><a href="/shop/?type=sofa">Sofa</a></li>
+                                    <li><a href="/shop/?type=table">Table</a></li>
+                                    <li><a href="/shop/?type=chair">Chair</a></li>
+                                    <li><a href="/shop/?type=bed">Bed</a></li>
+                                    <li><a href="/shop/?type=cabinetsAndShelves">Cabinets & Shelves</a></li>
+                                    <li><a href="/shop/?type=accessorie">Accessories</a></li>
+                                    <li><a href="/shop/?type=outdoor">OutDoor</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="/about">about us</a></li>
+                        <li><a href="/contact">contact</a></li>
+                        <% if (AdminAuthenticated) { %>
+                        <li><a href="#">admin</a>
+                            <div class="sub-menu menu-scroll">
+                                <ul>
+                                    <li><a href="/admin/products">Products</a></li>
+                                    <li><a href="/admin/add-product">Add Product</a></li>
+                                    <li><a href="/admin/order-admin">Orders Admin</a></li>
+                                    <li><a href="/admin/slides">Slides</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% if (!isAuthenticated) { %>
+                            <li><a href="/login">login</a></li>
+                            <li><a href="/signup">signup</a></li>
+                        <% } else { %>
+                            <li>
+                                <a >
+                                    <form action="/logout" method="post">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button style="    
+                                        background: transparent none repeat scroll 0 0;
+                                        color: #666;
+                                        display: block;
+                                        font-size: 14px;
+                                        font-weight: 700;
+                                        line-height: 45px;
+                                        padding: 0;
+                                        position: relative;
+                                        width: 100%;
+                                        text-align: left;
+                                        text-transform: uppercase;
+                                        z-index: 1;" type="submit">Logout</button>
+                                    </form>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+            <!-- MAIN-MENU END -->
+        </header>
+        <!-- HEADER-AREA END -->
+        <!-- Mobile-menu start -->
+        <div class="mobile-menu-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12 d-block d-md-none">
+                        <div class="mobile-menu">
+                            <nav id="dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="/">home</a>
+                                    </li>
+                                    <li><a href="/shop">shop</a>
+                                        <ul>
+                                            <li><a href="/shop/?type=sofa">Sofa</a></li>
+                                            <li><a href="/shop/?type=table">Table</a></li>
+                                            <li><a href="/shop/?type=chair">Chair</a></li>
+                                            <li><a href="/shop/?type=bed">Bed</a></li>
+                                            <li><a href="/shop/?type=cabinetsAndShelves">Cabinets & Shelves</a></li>
+                                            <li><a href="/shop/?type=accessorie">Accessories</a></li>
+                                            <li><a href="/shop/?type=outdoor">OutDoor</a></li>
+                                        </ul>
+                                    </li>
+                                    <% if (isAuthenticated) { %>
+                                        <li><a href="/">Account</a>
+                                                <ul>
+                                                    <li><a href="/cart">cart</a></li>
+                                                    <li><a href="/wishlist">wishlist</a></li>
+                                                    <li><a href="/order">orders</a></li>
+                                                </ul>
+                                        </li>
+                                    <% } %>
+                                    <li><a href="/about">about us</a></li>
+                                    <li><a href="/contact">contact</a></li>
+                                    <% if (AdminAuthenticated) { %>
+                                    <li><a href="#">admin</a>
+                                            <ul>
+                                                <li><a href="/admin/products">Products</a></li>
+                                                <li><a href="/admin/add-product">Add-product</a></li>
+                                                <li><a href="/admin/order-admin">Orders Admin</a></li>
+                                                <li><a href="/admin/slides">Slides</a></li>
+                                            </ul>
+                                    </li>
+                                    <% } %>
+                                    <% if (!isAuthenticated) { %>
+                                        <li><a href="/login">login</a></li>
+                                        <li><a href="/signup">signup</a></li>
+                                    <% } else { %>
+                                        <li>
+                                            <a >
+                                                <form action="/logout" method="post">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <button style="    
+                                                    background: transparent none repeat scroll 0 0;
+                                                    color: #666;
+                                                    display: block;
+                                                    font-size: 14px;
+                                                    font-weight: 700;
+                                                    line-height: 45px;
+                                                    padding: 0;
+                                                    position: relative;
+                                                    width: 100%;
+                                                    text-align: left;
+                                                    text-transform: uppercase;
+                                                    z-index: 1;" type="submit">Logout</button>
+                                                </form>
+                                            </a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile-menu end -->
+
+        <div class="overlay has-fade ">
+            <div class="notification bg-dark-white">
+                <div></div>
+                <p class="notification-text"></p>
+                <button data-text="confirm" class="button-one submit-button notificationButton" >OK</button>
+            </div>
+        </div>

@@ -1,0 +1,253 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>
+			<!-- PRODUCT-AREA START -->
+			<div class="product-area single-pro-area pt-80 pb-80 product-style-2">
+				<div class="container">	
+					<div class="row shop-list single-pro-info no-sidebar">
+						<!-- Single-product start -->
+						<div class="col-lg-12">
+							<div class="single-product clearfix">
+								<!-- Single-pro-slider Big-photo start -->
+								<div class="single-pro-slider single-big-photo view-lightbox slider-for">
+									<% for (let imageUrl of product.imageUrls) { %>
+									<div>
+										<img class="productImage" src="https://lh3.googleusercontent.com/u/0/d/<%= imageUrl %>" alt="" />
+										<a class="view-full-screen" href="https://lh3.googleusercontent.com/u/0/d/<%= imageUrl %>"  data-lightbox="roadtrip" data-title="<%= product.title %>">
+											<i class="zmdi zmdi-zoom-in"></i>
+										</a>
+									</div>
+									<% } %>
+								</div>	
+								<!-- Single-pro-slider Big-photo end -->								
+								<div class="product-info">
+									<div class="fix">
+										<h4 class="post-title floatleft"><%= product.title %></h4>
+										<span class="pro-rating floatright">
+											<% for (let i = 1; i <= product.reviews.ratingTotal / product.reviews.quantityRating ; i++  ) { %>
+												<i class="zmdi zmdi-star"></i>
+											<% } %>
+											<% if (((product.reviews.ratingTotal % product.reviews.quantityRating) / product.reviews.quantityRating) >= 0.5  ) { %>
+												<i class="zmdi zmdi-star-half"></i>
+											<% } %>
+											<span>(<%= product.reviews.quantityRating %> Rating) </span>
+										</span>
+									</div>
+									<div class="fix mb-20">
+										<% if(product.status == "sale") { %>
+											<span class="pro-price">$<%= product.priceSale %></span>
+										<% } else { %>
+											<span class="pro-price">$<%= product.price %></span>
+										<% } %>
+									</div>
+									<div class="product-description">
+										<p><%= product.description %></p>
+									</div>
+									<div class="color-filter single-pro-color mb-20 clearfix">
+										<ul>
+											<li><span class="color-title text-capitalize">color</span></li>
+											<li><span class="color color-<%= product.color %>"></span></li>
+										</ul>
+									</div>
+									<div class="amount-filter single-pro-color mb-20 clearfix">
+										<ul>
+											<li><span class="amount-title text-capitalize">Amount: <%= product.amount %></span></li>
+										</ul>
+									</div>
+									<div class="clearfix">
+										<div class="cart-plus-minus">
+											<button class="dec qtybutton">-</button>
+											<input type="text" value="1" pattern="[0-9]+" name="qtybutton" class="cart-plus-minus-box">
+											<button class="inc qtybutton">+</button>
+										</div>
+										<div class="product-action in-product clearfix">
+											<% if (isAuthenticated) { %>
+												<button type="button" data-bs-toggle="tooltip" data-placement="top" title="Add To Wishlist" onclick="AddWishList(this)">
+													<i class="zmdi zmdi-favorite-outline"></i>
+												</button>
+												<input type="hidden" value="<%= product._id %>" name="productId">
+												<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+												<button type="button" data-bs-toggle="tooltip" data-placement="top" class="addToCartButton" title="Add To Cart" onclick="AddCart(this)">
+													<i class="zmdi zmdi-shopping-cart-plus"></i>
+												</button>
+												<% } else { %>
+													<a href="/login" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+													<a href="/login" data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+											<% } %>
+										</div>
+									</div>
+									<!-- Single-pro-slider Small-photo start -->
+									<div class="single-pro-slider single-sml-photo slider-nav">
+										<% for (let imageUrl of product.imageUrls) { %>
+										<div>
+											<img class="productImage" src="https://lh3.googleusercontent.com/u/0/d/<%= imageUrl %>" alt="" />
+										</div>
+										<% } %>
+									</div>
+									<!-- Single-pro-slider Small-photo end -->
+								</div>
+							</div>
+						</div>
+						<!-- Single-product end -->
+					</div>
+					<!-- single-product-tab start -->
+					<div class="single-pro-tab">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="single-pro-tab-menu">
+									<!-- Nav tabs -->
+									<ul class="nav d-block">
+										<li><a href="#description" data-bs-toggle="tab">Description</a></li>
+										<li><a class="active" href="#reviews"  data-bs-toggle="tab">Reviews</a></li>
+										<li><a href="#information" data-bs-toggle="tab">Information</a></li>
+										<li><a href="#tags" data-bs-toggle="tab">Tags</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div class="tab-pane" id="description">
+										<div class="pro-tab-info pro-description">
+											<h3 class="tab-title title-border mb-30"><%= product.title %></h3>
+											<p><%= product.description %></p>
+										</div>
+									</div>
+									<div class="tab-pane active" id="reviews">
+										<div class="pro-tab-info pro-reviews">
+											<div class="customer-review mb-60">
+												<h3 class="tab-title title-border mb-30">Customer review</h3>
+												<ul class="product-comments clearfix">
+													<% if (product.reviews.review.length > 0) { %>
+														<% for (let review of product.reviews.review) { %>
+															<li class="mb-30">
+																<div class="pro-reviewer-comment">
+																	<div class="fix">
+																		<div class="floatleft mbl-center">
+																			<h5 class="text-uppercase mb-0"><strong><%= review.customerName %></strong></h5>
+																			<span class="customer-rating">
+																			<% for (let i = 1; i <= review.rating; i++  ) { %>
+																				<i class="zmdi zmdi-star radioStar"></i>
+																			<% } %>
+																			</span>
+																			<h5>Subject: <%= review.subject %></h5>
+																			<p class="reply-date"><%= review.date.toLocaleDateString() %> at <%= review.date.toLocaleTimeString() %></p>
+																		</div>
+																		<div class="comment-reply floatright">
+																				<input type="hidden" value="<%= product._id %>" name="productId">
+																				<input type="hidden" value="<%= review._id %>" name="reviewId">
+																				<input type="hidden" value="<%= review.rating %>" name="reviewRating">
+																				<input type="hidden" value="<%= review.userId %>" name="userId">
+																				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+																				<a><i class="zmdi zmdi-close" onclick="deleteReviewProduct(this)"></i></a>
+																		</div>
+																	</div>
+																	<p class="mb-0"><%= review.comment %></p>
+																</div>
+															</li>
+														<% } %>
+													<% } else { %>
+														<h1>There are no reviews yet!</h1>
+													<% } %>
+												
+												</ul>
+											</div>
+										<form action="/products-review/<%= product._id %>" method="POST">
+											<div class="leave-review">
+												<h3 class="tab-title title-border mb-30">Leave your review</h3>
+												<div class="your-rating mb-30">
+													<p class="mb-10"><strong>Your Rating</strong></p>
+													<span class="separator">|</span>
+													<span>
+														<i class="zmdi zmdi-star-outline radioStar"></i>
+														<input type="radio" name="radioRating" value="1">
+														<i class="zmdi zmdi-star-outline radioStar"></i>
+														<input type="radio" name="radioRating" value="2">
+														<i class="zmdi zmdi-star-outline radioStar"></i>
+														<input type="radio" name="radioRating" value="3">
+														<i class="zmdi zmdi-star-outline radioStar"></i>
+														<input type="radio" name="radioRating" value="4">
+														<i class="zmdi zmdi-star-outline radioStar"></i>
+														<input type="radio" name="radioRating" value="5">
+													</span>
+												</div>
+												<div class="reply-box">
+														<div class="row">
+															<div class="col-md-6">
+																<input type="text" placeholder="Your name here..." name="name" />
+															</div>
+															<div class="col-md-6">
+																<input type="text" placeholder="Subject..." name="subject" />
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<textarea class="custom-textarea" name="comment" placeholder="Your review here..." ></textarea>
+																<input type="hidden" value="<%= product._id %>" name="productId">
+																<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+																<% if (isAuthenticated) { %>
+																<button type="submit" data-text="submit review" class="button-one submit-button mt-20">submit review</button>
+																<% } else { %>
+																	<a href="/login" data-text="You need login here" class="button-one submit-button mt-20">submit review</a>
+																<% } %>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>		
+										</form>
+									</div>
+									<div class="tab-pane" id="information">
+										<div class="pro-tab-info pro-information">
+											<h3 class="tab-title title-border mb-30">Product information</h3>
+											<p><%= product.information %></p>
+										</div>											
+									</div>
+									<div class="tab-pane" id="tags">
+										<div class="pro-tab-info pro-information">
+											<h3 class="tab-title title-border mb-30">tags</h3>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at est bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at est bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at est bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
+										</div>											
+									</div>
+								</div>									
+							</div>
+						</div>
+					</div>
+					<!-- single-product-tab end -->
+				</div>
+			</div>
+			<!-- PRODUCT-AREA END -->
+    </div>
+	<script>
+		const radioStars = document.querySelectorAll('.radioStar');
+		const radioRatings = document.querySelectorAll('input[name="radioRating"]');
+		for (const radioStar of radioStars) {
+			radioStar.addEventListener("click", function() {
+				const radioRating = this.nextElementSibling;
+				radioRating.checked = !radioRating.checked;
+				RenderCheckedboxStar(radioRating.checked, radioRating.value);
+			});
+		}
+		function RenderCheckedboxStar(checked,value) {
+			for ( const radioRating of radioRatings) {
+				const i = radioRating.previousElementSibling
+				if(checked) {
+					if(radioRating.value <= value) {
+						i.classList.remove("zmdi-star-outline");
+						i.classList.add("zmdi-star");
+					} else {
+						i.classList.remove("zmdi-star");
+						i.classList.add("zmdi-star-outline");
+					}
+				} else {
+					i.classList.remove("zmdi-star");
+					i.classList.add("zmdi-star-outline");
+				}
+			}
+		}
+	</script>
+</body>
+<%- include('../includes/end.ejs') %>

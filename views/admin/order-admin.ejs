@@ -1,0 +1,230 @@
+
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>
+		<!-- HEADING-BANNER START -->
+        <div class="heading-banner-area overlay-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading-banner">
+                            <div class="heading-banner-title">
+                                <h2>order complete</h2>
+                            </div>
+                            <div class="breadcumbs pb-15">
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/order">Order complete</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- HEADING-BANNER END -->
+        <!-- ORDER-AREA START -->
+        <div class="shopping-cart-area  pt-80 pb-80">
+            <div class="container">	
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shopping-cart">
+                                        <% if (orders.length > 0) { %>
+                                            <% orders.forEach(order => { %>
+                                                <div class="order-info bg-white text-center clearfix">
+                                                    <div class="single-order-info">
+                                                        <h4 class="title-1 text-uppercase text-light-black mb-0">order no</h4>
+                                                        <p class="text-uppercase text-light-black mb-0"><strong><%= order._id %></strong></p>
+                                                    </div>
+                                                    <div class="single-order-info">
+                                                        <h4 class="title-1 text-uppercase text-light-black mb-0">Date</h4>
+                                                        <p class="text-uppercase text-light-black mb-0"><strong><%= order.updatedAt %></strong></p>
+                                                    </div>
+                                                    <div class="single-order-info">
+                                                        <h4 class="title-1 text-uppercase text-light-black mb-0">Total</h4>
+                                                        <p class="text-uppercase text-light-black mb-0"><strong>$<%= order.totalPrice %></strong></p>
+                                                    </div>
+                                                    <div class="single-order-info">
+                                                        <h4 class="title-1 text-uppercase text-light-black mb-0">Status</h4>
+                                                        <form action="/admin/order-admin/<%= order._id %>" method="post" class="order-admin-status">
+                                                            <select name="setStatusOrder" class="custom-select">
+                                                                <option
+                                                                    <% if (order.status == 'confirming') { %> selected <% } %>
+                                                                    value="confirming">Confirming
+                                                                </option>
+                                                                <option 
+                                                                    <% if (order.status == 'toRecevice') { %> selected <% } %>
+                                                                    value="toRecevice">To Receive
+                                                                </option>
+                                                                <option  
+                                                                    <% if (order.status == 'toShip') { %> selected <% } %>
+                                                                    value="toShip">To Ship
+                                                                </option>
+                                                                <option
+                                                                    <% if (order.status == 'complete') { %> selected <% } %>
+                                                                    value="complete">Complete
+                                                                </option>
+                                                            </select>
+                                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                            <input type="hidden" name="orderId" value="<%= order._id %>">
+                                                            <button type="submit" data-text="Update Status" class="button-one submit-button">Update status</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="panel mb-30">
+                                                    <div class="my-account-menu" >
+                                                        <a  data-bs-toggle="collapse" href="#a<%= order._id %>">
+                                                            details order
+                                                            </a>
+                                                        </div>
+                                                        <div id="a<%= order._id %>" class="panel-collapse collapse" data-bs-parent="#accordion">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="billing-details shop-cart-table">
+                                                                                <div class="row">
+                                                                                    <label for="email">Email</label>
+                                                                                    <input type="text" name="email" value="<%= order.user.email %>" disabled>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <label for="name">Name</label>
+                                                                                    <input type="text" name="name" placeholder="Your name here..." value="<%= order.user.name %>" disabled>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <label for="phone">Phone</label>
+                                                                                    <input type="number" name="phone" placeholder="Phone here: +..." inputmode="numeric" value="<%= order.user.phone %>" disabled>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <label for="contry">Contry</label>
+                                                                                    <input type="text" name="contry" placeholder="Contry name here..." value="<%= order.user.contry %>" disabled>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <label for="state">State</label>
+                                                                                    <input type="text" name="state" placeholder="State name here..." value="<%= order.user.state %>" disabled>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <label for="city">Town / City</label>
+                                                                                    <input type="text" name="city" placeholder="Town / City name here..." value="<%= order.user.city %>" disabled>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <label for="address">Address</label>
+                                                                                    <textarea name="address" placeholder="Your address here..." class="custom-textarea" disabled><%= order.user.address %></textarea>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 bg-white">
+                                                                        <div class="mb-30 mt-30">
+                                                                            <label for="coupon">Your coupon</label>
+                                                                            <input name="coupon" type="text" placeholext="apply coupon" class="button-one submit-button mt-15" disabled value="<%= order.user.coupon %>"></button>
+                                                                        </div>
+                                                                        <div class="our-order payment-details pr-20">
+                                                                            <h4 class="title-1 title-border text-uppercase mb-30">our order</h4>
+                                                                            <table>
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th><strong>Product</strong></th>
+                                                                                        <th class="text-end"><strong>Total</strong></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                        <% order.products.forEach(p => { %>
+                                                                                        <tr>
+                                                                                            <td><%= p.product.title %>  x <%= p.quantity %></td>
+                                                                                            <td class="text-end">$<%= p.product.price*p.quantity %></td>
+                                                                                        </tr>
+                                                                                    <% }) %>
+                                                                                    <tr>
+                                                                                        <td>Coupon</td>
+                                                                                        <td class="text-end">$00.00</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Order Total</td>
+                                                                                        <td class="text-end">$<%= order.totalPrice %></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            <% }); %>
+                                                
+                                        <% } else { %>
+                                            <h1>You don't have a completed order yet!</h1>
+                                        <% } %>
+
+                                        
+                                <!-- order-complete end -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ORDER-AREA END -->
+        <!-- QUICKVIEW PRODUCT -->
+        <div id="quickview-wrapper">
+           <!-- Modal -->
+           <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-product">
+                                <div class="product-images">
+                                    <div class="main-image images">
+                                        <img alt="#" src="img/product/quickview-photo.jpg"/>
+                                    </div>
+                                </div><!-- .product-images -->
+
+                                <div class="product-info">
+                                    <h1>Aenean eu tristique</h1>
+                                    <div class="price-box-3">
+                                        <hr />
+                                        <div class="s-price-box">
+                                            <span class="new-price">$160.00</span>
+                                            <span class="old-price">$190.00</span>
+                                        </div>
+                                        <hr />
+                                    </div>
+                                    <a href="shop.html" class="see-all">See all features</a>
+                                    <div class="quick-add-to-cart">
+                                        <form method="post" class="cart">
+                                            <div class="numbers-row">
+                                                <input type="number" id="french-hens" value="3" min="1">
+                                            </div>
+                                            <button class="single_add_to_cart_button" type="submit">Add to cart</button>
+                                        </form>
+                                    </div>
+                                    <div class="quick-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero.
+                                    </div>
+                                    <div class="social-sharing">
+                                        <div class="widget widget_socialsharing_widget">
+                                            <h3 class="widget-title-modal">Share this product</h3>
+                                            <ul class="social-icons">
+                                                <li><a target="_blank" title="Google +" href="#" class="gplus social-icon"><i class="zmdi zmdi-google-plus"></i></a></li>
+                                                <li><a target="_blank" title="Twitter" href="#" class="twitter social-icon"><i class="zmdi zmdi-twitter"></i></a></li>
+                                                <li><a target="_blank" title="Facebook" href="#" class="facebook social-icon"><i class="zmdi zmdi-facebook"></i></a></li>
+                                                <li><a target="_blank" title="LinkedIn" href="#" class="linkedin social-icon"><i class="zmdi zmdi-linkedin"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div><!-- .product-info -->
+                            </div><!-- .modal-product -->
+                        </div><!-- .modal-body -->
+                    </div><!-- .modal-content -->
+                </div><!-- .modal-dialog -->
+           </div>
+           <!-- END Modal -->
+        </div>
+        <!-- END QUICKVIEW PRODUCT -->	
+    </div>
+</body>
+<%- include('../includes/end.ejs') %>

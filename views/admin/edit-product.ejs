@@ -1,0 +1,199 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>  	    
+			<!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>Add product</h2>
+								</div>
+								<div class="breadcumbs pb-15">
+									<ul>
+										<li><a href="/index">Home</a></li>
+										<% if (editing) { %>
+											<li>Edit product</li>
+										<% } else { %>
+											<li>Add product</li>
+										<% } %>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<!-- SHOPPING-CART-AREA START -->
+			<div class="login-area  pt-80 pb-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="customer-login text-left">
+							<% if (errorMessage) { %>
+								<div class="user-message user-message--error"><%= errorMessage %></div>
+							<% } %>
+								<form action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="multipart/form-data">
+									<div class="row">
+										<label for="title">Title</label>
+											<input 
+												class="<%= validationErrors.find(e => e.path === 'title') ? 'invalid' : '' %>"
+												type="text" 
+												name="title" 
+												id="title" 
+												value="<% if (editing || hasError) { %><%= product.title %><% } %>">
+									</div>
+									<div class="row">
+										<label for="image">Image</label>
+										<input 
+											type="file" 
+											multiple="multiple"
+											name="image" 
+											id="image" >
+									</div>
+									<div class="row">
+										<label for="price">Price: $</label>
+											<input
+												class="<%= validationErrors.find(e => e.path === 'price') ? 'invalid' : '' %>"
+												type="number" 
+												name="price" 
+												id="price" 
+												step="0.01" 
+												value="<% if (editing || hasError) { %><%= product.price %><% } %>">
+									</div>
+									<div class="row">
+										<label for="amount">Amount</label>
+											<input
+												class="<%= validationErrors.find(e => e.path === 'amount') ? 'invalid' : '' %>"
+												type="number" 
+												name="amount" 
+												id="amount" 
+												step="1" 
+												value="<% if (editing || hasError) { %><%= product.amount %><% } %>">
+									</div>
+									<div class="row">
+										<label for="description">Description</label>
+											<textarea 
+												class="<%= validationErrors.find(e => e.path === 'description') ? 'invalid' : '' %>"
+												name="description" 
+												id="description" 
+												rows="5"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>			
+									</div>
+									<div class="row">
+										<label for="information">Information</label>
+											<textarea 
+												class="<%= validationErrors.find(e => e.path === 'information') ? 'invalid' : '' %>"
+												name="information" 
+												id="information" 
+												rows="5"><% if (editing || hasError) { %><%= product.information %><% } %></textarea>			
+									</div>
+									<div class="status-radio">
+										<p>Status</p>
+										<input type="radio" id="status-none" name="status" value="none" <% if (!editing) { %> checked <% } %>>
+										<label for="status-none">None</label> 
+										<input type="radio" id="status-new" name="status" value="new">
+										<label for="status-new">New</label>
+										<input type="radio" id="status-sale" name="status" value="sale">
+										<label for="status-sale">Sale</label>
+											<label for="priceSale">Price sale: $</label>
+											<input type="number" id="price-sale" name="priceSale" value="<% if (editing) { %><%= product.priceSale %><% } %>" disabled>
+									</div>
+									<div class="type-radio">
+										<p>Type</p>
+										<input type="radio" id="type-sofa" name="type" value="sofa" <% if (!editing) { %> checked <% } %>>
+										<label for="type-sofa">Sofa</label> 
+										<input type="radio" id="type-table" name="type" value="table">
+										<label for="type-table">Table</label>
+										<input type="radio" id="type-chair" name="type" value="chair">
+										<label for="type-chair">Chair</label>
+										<input type="radio" id="type-bed" name="type" value="bed">
+										<label for="type-bed">Bed</label>
+										<input type="radio" id="type-cabinetsAndShelves" name="type" value="cabinetsAndShelves">
+										<label for="type-cabinetsAndShelves">Cabinets & Shelves</label>
+										<input type="radio" id="type-accessories" name="type" value="accessories">
+										<label for="type-accessories">Accessories</label>
+										<input type="radio" id="type-outdoor" name="type" value="outdoor">
+										<label for="type-outdoor">Outdoor</label>
+									</div>
+									<div class="color-radio">
+										<p>Color</p>
+										<input type="radio" id="color-lightSalmon" name="color" value="lightSalmon" <% if (!editing) { %> checked <% } %>>
+										<label for="color-lightSalmon"><span class="color color-lightSalmon"></span>LightSalmon</label>
+										<input type="radio" id="color-darkSalmon" name="color" value="darkSalmon">
+										<label for="color-darkSalmon"><span class="color color-darkSalmon"></span>Dark Salmon</label>
+										<input type="radio" id="color-tomato" name="color" value="tomato">
+										<label for="color-tomato"><span class="color color-tomato"></span>Tomato</label>
+										<input type="radio" id="color-deepSkyBlue" name="color" value="deepSkyBlue">
+										<label for="color-deepSkyBlue"><span class="color color-deepSkyBlue"></span>Deep Sky Blue</label>
+										<input type="radio" id="color-atlantis" name="color" value="atlantis">
+										<label for="color-atlantis"><span class="color color-atlantis"></span>Atlantis</label>
+										<input type="radio" id="color-deepLilac" name="color" value="deepLilac">
+										<label for="color-deepLilac"><span class="color color-deepLilac"></span>Deep Lilac</label>
+									</div>
+									<% if (editing) { %>
+										<input type="hidden" value="<%= product._id %>" name="productId">
+										<input type="hidden" value="<%= product.status %>" name="statusEdit">
+										<input type="hidden" value="<%= product.color %>" name="colorEdit">
+										<input type="hidden" value="<%= product.type %>" name="typeEdit">
+									<% } %>
+									<div class="row">
+										<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+										<button data-text="<% if (editing) { %>Update Product<% } else { %>Add Product<% } %>" type="submit" class="button-one submit-button mt-15"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script >
+				const statusRadios = document.querySelectorAll('input[name=status]')
+				const colorRadios = document.querySelectorAll('input[name=color]')
+				const typeRadios = document.querySelectorAll('input[name=type]')
+				const statusRadioSale = document.getElementById("status-sale");
+				const priceSale = document.getElementById("price-sale");
+				const statusEdit = document.querySelector("input[name=statusEdit]"); 
+				const colorEdit = document.querySelector("input[name=colorEdit]"); 
+				const typeEdit = document.querySelector("input[name=typeEdit]"); 
+			  
+				for (const statusRadio of statusRadios) {
+					if(statusRadio.value == "sale") {
+						priceSale.disabled = false
+					}
+					statusRadio.addEventListener("change", function() {
+						priceSale.disabled = !statusRadioSale.checked;
+					});
+					if(statusEdit) {
+						if(statusRadio.value == statusEdit.value) {
+							statusRadio.checked = true
+						}
+					}
+				}
+				if(colorRadios) {
+					for (const colorRadio of colorRadios) {
+						if(colorEdit) {
+							if(colorRadio.value == colorEdit.value) {
+								colorRadio.checked = true
+							}
+						}
+					}
+				}
+				if(typeRadios) {
+					for (const typeRadio of typeRadios) {
+						if(typeEdit) {
+							if(typeRadio.value == typeEdit.value) {
+								typeRadio.checked = true
+							}
+						}
+					}
+				}
+
+			</script>
+
+			<!-- SHOPPING-CART-AREA END -->
+    </div>
+</body>
+<%- include('../includes/end.ejs') %>

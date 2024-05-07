@@ -1,0 +1,77 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>  	    
+			<!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>Registration</h2>
+								</div>
+								<div class="breadcumbs pb-15">
+									<ul>
+										<li><a href="/">Home</a></li>
+										<li><a href="/signup">Signup</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<!-- SHOPPING-CART-AREA START -->
+			<div class="login-area  pt-80 pb-80">
+				<div class="container">
+					<form action="/signup" method="POST" novalidate>	
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="customer-login customer-auth text-left">
+									<h4 class="title-1 title-border text-uppercase mb-30">new customers</h4>
+									<% if (errorMessage) { %>
+										<div class="user-message user-message--error"><%= errorMessage %></div>
+									<% } %>
+									<p class="text-gray">If you have an account with us, <a href="/login">Please login!</a></p>
+									<label for="email">E-Mail</label>
+									<input
+										placeholder="Your email here..."
+										class="<%= validationErrors.find(e => e.path === 'email') ? 'invalid' : '' %>"
+										type="email" 
+										name="email" 
+										id="email" 
+										value="<%= oldInput.email %>">
+									<label for="password">Password</label>
+									<input
+										placeholder="Password"
+										class="<%= validationErrors.find(e => e.path === 'password') ? 'invalid' : '' %>"
+										type="password" 
+										name="password" 
+										id="password" 
+										value="<%= oldInput.password %>">
+									<label for="confirmPassword">Confirm Password</label>
+									<input
+										placeholder="Confirm Password"
+										class="<%= validationErrors.find(e => e.path === 'confirmPassword') ? 'invalid' : '' %>"
+										type="password" 
+										name="confirmPassword" 
+										id="confirmPassword" 
+										value="<%= oldInput.confirmPassword %>">
+									<!-- <p class="mb-0">
+										<input type="checkbox" id="newsletter" name="newsletter" checked>
+										<label for="newsletter"><span>Sign up for our newsletter!</span></label>
+									</p> -->
+									<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+									<button type="submit" data-text="regiter" class="button-one submit-button mt-15">signup</button>
+								</div>					
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- SHOPPING-CART-AREA END -->
+    </div>
+</body>
+<%- include('../includes/end.ejs') %>

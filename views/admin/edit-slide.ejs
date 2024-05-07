@@ -1,0 +1,83 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>  	    
+			<!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>Edit Slide</h2>
+								</div>
+								<div class="breadcumbs pb-15">
+									<ul>
+										<li><a href="/index">Home</a></li>
+											<li>Edit Slide</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<!-- SHOPPING-CART-AREA START -->
+			<div class="login-area  pt-80 pb-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="customer-login text-left">
+							<% if (errorMessage) { %>
+								<div class="user-message user-message--error"><%= errorMessage %></div>
+							<% } %>
+								<form action="/admin/edit-slide" method="POST" enctype="multipart/form-data">
+									<div class="row">
+										<label for="title1">Title1</label>
+											<input 
+												class="<%= validationErrors.find(e => e.path === 'title1') ? 'invalid' : '' %>"
+												type="text" 
+												name="title1" 
+												id="title1" 
+												value="<%= slide.title1 %>">
+									</div>
+									<div class="row">
+										<label for="text">Text</label>
+											<input 
+												class="<%= validationErrors.find(e => e.path === 'text') ? 'invalid' : '' %>"
+												type="text" 
+												name="text" 
+												id="text" 
+												value="<%= slide.text %>">
+									</div>
+									<div class="row">
+										<label for="linkProduct">Link Product</label>
+											<input 
+												class="<%= validationErrors.find(e => e.path === 'linkProduct') ? 'invalid' : '' %>"
+												type="text" 
+												name="linkProduct" 
+												id="linkProduct" 
+												value="<%= slide.linkProduct %>">
+									</div>
+									<div class="row">
+										<label for="image">Image</label>
+										<input 
+											type="file"
+											name="image" 
+											id="image" >
+									</div>
+									<div class="row">
+										<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+										<input type="hidden" name="slideMode" value="<%= slideMode %>">
+										<button data-text="Update Layer" type="submit" class="button-one submit-button mt-15">Update Layer</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+    </div>
+</body>
+<%- include('../includes/end.ejs') %>

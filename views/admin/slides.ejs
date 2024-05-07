@@ -1,0 +1,96 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>  	    
+			<!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>Edit slide</h2>
+								</div>
+								<div class="breadcumbs pb-15">
+									<ul>
+										<li><a href="index.html">Home</a></li>
+											<li>Slides</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<div class="pt-80 pb-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Silde</th>
+                                        <th>Name</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Main slide: 1220x800</td>
+                                        <td>
+                                            <% for (let slide of slides.mainSlide) { %>
+                                                <div class="slides-action">
+                                                    <%= slide._id %> <a href="/admin/edit-layer/<%= slide._id %>?edit=true&slide=main" class="edit-slide"><i class="zmdi zmdi-edit"></i></a>
+                                                    <form action="/admin/delete-layer?slide=main" method="POST">
+                                                        <input type="hidden" value="<%= slide._id %>" name="slideId">
+                                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                        <button class="btn" type="submit"><i class="zmdi zmdi-delete"></i></button>
+                                                    </form>
+                                                </div>
+                                            <% } %>
+                                            Add layer<a class="edit-slide" href="/admin/add-layer?slide=main"><i class="zmdi zmdi-plus-square"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Mid slide: 1170x500</td>
+                                        <td>
+                                            <% for (let slide of slides.midSlide) { %>
+                                                <div class="slides-action">
+                                                    <%= slide._id %> 
+                                                    <a href="/admin/edit-layer/<%= slide._id %>?edit=true&slide=mid" class="edit-slide"><i class="zmdi zmdi-edit"></i></a><br>
+                                                    <form action="/admin/delete-layer?slide=mid" method="POST">
+                                                        <input type="hidden" value="<%= slide._id %>" name="slideId">
+                                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                        <button class="btn" type="submit"><i class="zmdi zmdi-delete"></i></button>
+                                                    </form>
+                                                </div>
+                                            <% } %>
+                                            Add layer<a class="edit-slide" href="/admin/add-layer?slide=mid "><i class="zmdi zmdi-plus-square"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Extra slide 2: 450x375</td>
+                                        <td>
+                                            <a href="/admin/edit-slide/extra1" class="edit-slide"><i class="zmdi zmdi-edit"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Extra slide 1: 450x375</td>  
+                                        <td>
+                                            <a href="/admin/edit-slide/extra2" class="edit-slide"><i class="zmdi zmdi-edit"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+						</div>
+					</div>
+				</div>
+			</div>
+    </div>
+</body>
+<%- include('../includes/end.ejs') %>

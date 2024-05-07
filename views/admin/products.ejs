@@ -1,0 +1,108 @@
+<%- include('../includes/head.ejs') %>
+<body>
+    <div class="wrapper bg-dark-white">
+        <%- include('../includes/navigation.ejs') %>
+        <!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>Product Grid View</h2>
+								</div>
+								<div class="breadcumbs pb-15">
+									<ul>
+										<li><a href="#">Home</a></li>
+										<li>Product grid view</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<div class="pt-80 pb-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#Id</th>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>QuantitySold</th>
+										<th>Img</th>
+										<th>Edit/delete</th>
+                                    </tr>
+                                </thead>
+								<% if (prods.length > 0) { %>
+									<% for (let product of prods) { %>
+										<tbody>
+											<tr>
+												<td><%= product._id %></td>
+												<td><%= product.title %></td>
+												<td><%= product.type %></td>
+												<td><%= product.amount %></td>
+												<td><%= product.quantitySold %></td>
+												<td>
+													<img class="products-img" src="https://lh3.googleusercontent.com/u/0/d/<%= product.imageUrls[0] %>" alt="<%= product.title %>" /></td>
+												<td>
+													<div class="products-edit-delete">
+														<a href="/admin/edit-product/<%= product._id %>?edit=true" data-bs-toggle="tooltip" data-placement="top" title="Edit Product"><i class="zmdi zmdi-edit"></i></a>
+														<input type="hidden" value="<%= product._id %>" name="productId">
+														<form action="/admin/delete-product" method="POST">
+															<input type="hidden" value="<%= product._id %>" name="productId">
+															<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+															<button class="btn" type="submit"><i class="zmdi zmdi-delete"></i></button>
+														</form>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									<% } %>
+								<% } else { %>
+									<td>No Products Found!</td>
+									<% } %>
+                            </table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="shop-pagination text-center">
+				<div class="pagination">
+					<ul>
+					<% if (hasPreviousPage) { %>
+						<li><a href="/admin/products/?page=<%= previousPage %>"><i class="zmdi zmdi-long-arrow-left"></i></a></li>
+					<% } %>
+					<% if (currentPage !== 1 && previousPage !== 1) { %>
+						<li><a href="/admin/products/?page=1">1</a></li>
+					<% } %>
+					<% if ((previousPage - 1)  > 1) { %>
+						<li>...</li>
+					<% } %>
+					<% if (hasPreviousPage) { %>
+						<li><a href="/admin/products/?page=<%= previousPage %>" ><%= previousPage %></a></li>
+					<% } %>
+					<li><a href="/admin/products/?page=<%= currentPage %>" class="active"><%= currentPage %></a></li>
+					<% if (hasNextPage) { %>
+						<li><a href="/admin/products/?page=<%= nextPage %>" ><%= nextPage %></a></li>
+					<% } %>
+					<% if ((nextPage + 1) < lastPage) { %>
+						<li>...</li>
+					<% } %>
+					<% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+						<li><a href="/admin/products/?page=<%= lastPage %>" ><%= lastPage %></a></li>
+					<% } %>
+					<% if (hasNextPage) { %>
+						<li><a href="/admin/products/?page=<%= nextPage %>"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+					<% } %>
+					</ul>
+				</div>
+			</div>
+    </div>
+</body>
+<%- include('../includes/end.ejs') %>

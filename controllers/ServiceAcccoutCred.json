@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shophurst",
+  "private_key_id": "d1d4c2cc6da2112200ab1254637056d22f7b55cd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDFOQrfio/LMOst\nx+zMQr4SgOaPj+JpvFPc/al79ETT2voPR9ozVg2AGIP446r9WA20EJTEBgN7IXu2\nsAT0TvTziW6ld3E3mtH2E9GKr33bKiKkPG38OtsicXsoFRDQpHcKopEbVcwWByqE\n98n0lypFGAHdx96GDvuzcaHwifi63YC1/AYw9FU78C2K+Ug/o+hBfXrvFdGBIJDV\nU4uDSjeMVubwaBceB8m+0w7tsrWHqa/y7UR78iv+cgqH5m/Lgi9apJDzcTsKtOtZ\nplnIoVeQyDuH0yuvXzYe2fTrdsf8ey12BNDyNw13N/tGNPXheuLY3NpPLwZWcuQm\nEGNfMjOxAgMBAAECggEAGc44w9QjtCYJTQW2UGnBPgw7Xs3TBcZxwLOOJse+Q8GI\nwPwZVb3s6UsL5ZfrNS1S1FyWYpRuMIEf6LZdB5csijsmzPl1HnNLBWRFdtyMiWND\ngh2IFJ33iKkJliPffeAEgCc8+Qh/ujgjfPTWf4L8scAOP8svAiKEFlAy12ruLouh\ngWmrJ18x0BGV0NG0n7+N2MeKzQVTYRJbFhuaVr3SPBNWNVrSdif98Wae1wCTWQxD\nY3kFrxUL0pAhm6P8ct1nFC8QR0nR5yP/hPXhqBgQEIEclS0+ZEX+QhFFO9OhD8ME\nGXFW0YdxS1PE6n9HjjXNGOdPqV/DN38bsJHSP1kSgwKBgQD9xWEDy98xMv3FqgZF\nqqtOMyUJP4ESwNCY0BAQlWizTnGi2sh8qnNbopqSg9juHVk9woklJyrypVl5QWU+\nxKjScydoArSeXqh+GbSsDk4qWuI7w2Ewm0Ro1UCPswLczmq+mwRmXH9X1Y6O9PCt\nZghysfp+J70VJRF83QJPL7D2/wKBgQDG9ILZzXmxOZJTRIKyh963QL3jrNc2V9AI\nAh5LSZYoHxlyVkQAvZz+wmOeCPQI5USlU4WE2vang8IZ6tnk3BAzZSiXNErp5QmB\nmzHXL3G1CaPe48/J8aMaTt9bvnrZGhHj2mgJGMHjz9+Uj+nrZ2E0D3Jlm3BP+v4L\ngow9qD0FTwKBgH057UnGTPkmRHxKDpZKRgZszpXltHfglg8SfRrx35y71O+cLtr1\n8b8CWmx6i43VBbioSqz+yv66AZEIaEG1IenX0VZOH3sXEuZHIRTWalQUTRdYrpkh\nxXxF33oJyBvV8G7maCFq+5wIUjTRQgMPGpQep5GhYnkQtbR8CyuwSQ9ZAoGBAKEF\nKZX/P7tYvf2YWDMH1g/4XPcUXwXDYkHo/P2v69BDA0RPXzA+Rf7F8vvngSJl8/3e\nMBTLZo9DCugQ9BLOrGn8ODLQBsVwMhZsNZVT97IuwCrXs8dcQsY7CXjmG+TzvYDs\ntgCOwfWPuwMwyoBUJg6NZeeoOujwWYWVPc11CRXvAoGBAIx/ocZYu0KMWTgIiynt\nF+W+KgPvBf6f4SR/wfNHdEgFdhxIo7XJVz8+yrzMxMvyvg0ni6LD/VlHEJeBZbhq\nyOtPBe66+ZklBE45jCcMwivkiIhEu0BYN5Bh4kln3g5L0GQP7fLF4QJbkfM4SO8R\nVVD1BA4hNppFpgXXtUT6Ba4V\n-----END PRIVATE KEY-----\n",
+  "client_email": "shophurst@shophurst.iam.gserviceaccount.com",
+  "client_id": "117577804359578026144",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/shophurst%40shophurst.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
